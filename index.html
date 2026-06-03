@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JMP Accounting and Admin Solution — Professional Freelance Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal: #171717;
+      --charcoal-2: #1F1F1F;
+      --charcoal-3: #2A2A2A;
+      --brass: #C9A455;
+      --brass-light: #DFC07A;
+      --brass-dim: rgba(201,164,85,0.15);
+      --ivory: #F5F0E8;
+      --ivory-2: #EDE8DF;
+      --white: #FFFFFF;
+      --text-body: #3D3D3D;
+      --text-mid: #6B6B6B;
+      --text-light: #9A9A9A;
+      --border-light: #E5E0D8;
+      --border-dark: rgba(255,255,255,0.08);
+      --jason: #2C4A6E;
+      --jason-light: #3A5F8A;
+      --michelle: #4A2C3E;
+      --michelle-light: #6A3F58;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      background: var(--ivory);
+      color: var(--text-body);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    * { cursor: none !important; }
+    .cursor {
+      position: fixed; z-index: 9999;
+      width: 8px; height: 8px;
+      background: var(--brass);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    }
+    .cursor-ring {
+      position: fixed; z-index: 9998;
+      width: 32px; height: 32px;
+      border: 1px solid rgba(201,164,85,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(23, 23, 23, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .nav-brand {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.15rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-brand span { color: var(--brass); }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--brass-light); }
+
+    .nav-cta {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      background: var(--brass);
+      padding: 0.55rem 1.4rem;
+      text-decoration: none;
+      border-radius: 1px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--brass-light); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--charcoal);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 100px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      bottom: -0.1em; left: -0.02em;
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(8rem, 18vw, 18rem);
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201,164,85,0.07);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 2rem;
+    }
+    .hero-tag::before, .hero-tag::after {
+      content: '';
+      display: block; width: 28px; height: 1px; background: var(--brass);
+    }
+
+    .hero h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(3rem, 6.5vw, 6rem);
+      font-weight: 400;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 2rem;
+      max-width: 860px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--brass);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.45);
+      max-width: 520px;
+      line-height: 1.85;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-duo {
+      display: flex; gap: 1px;
+      max-width: 560px;
+    }
+
+    .duo-card {
+      flex: 1;
+      padding: 1.8rem 1.5rem;
+      border-top: 2px solid;
+      position: relative;
+    }
+    .duo-card.jason { background: rgba(44,74,110,0.25); border-color: #2C4A6E; }
+    .duo-card.michelle { background: rgba(74,44,62,0.25); border-color: #4A2C3E; }
+
+    .duo-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .duo-role {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 0.8rem;
+    }
+
+    .duo-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem; right: 5%;
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block; width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(201,164,85,0.5), transparent);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--brass), transparent);
+      opacity: 0.3;
+      margin: 0 5%;
+    }
+
+    /* ── SECTION ── */
+    section { padding: 110px 5%; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── MEET ── */
+    #meet { background: var(--white); }
+
+    .meet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-top: 4rem;
+    }
+
+    .meet-card {
+      padding: 3.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .meet-card.jason-card { background: var(--ivory); }
+    .meet-card.michelle-card { background: var(--ivory-2); }
+
+    .meet-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+    }
+    .meet-card.jason-card::before { background: var(--jason); }
+    .meet-card.michelle-card::before { background: var(--michelle); }
+
+    .meet-photo {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      margin-bottom: 1.8rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--white);
+      position: relative;
+    }
+    .meet-card.jason-card .meet-photo { background: var(--jason); }
+    .meet-card.michelle-card .meet-photo { background: var(--michelle); }
+
+    .photo-hint {
+      position: absolute; bottom: -6px; right: -6px;
+      width: 22px; height: 22px;
+      background: var(--brass);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      color: var(--charcoal);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .meet-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 0.3rem;
+    }
+
+    .meet-role {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    .meet-card.jason-card .meet-role { color: var(--jason); }
+    .meet-card.michelle-card .meet-role { color: var(--michelle); }
+
+    .meet-bio {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      margin-bottom: 1.8rem;
+    }
+
+    .meet-skills {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .skill-tag {
+      font-size: 0.73rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 0.85rem;
+      border-radius: 1px;
+      border: 1px solid;
+    }
+    .meet-card.jason-card .skill-tag {
+      border-color: rgba(44,74,110,0.25);
+      color: var(--jason);
+      background: rgba(44,74,110,0.05);
+    }
+    .meet-card.michelle-card .skill-tag {
+      border-color: rgba(74,44,62,0.25);
+      color: var(--michelle);
+      background: rgba(74,44,62,0.05);
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--charcoal); }
+    #services .section-title { color: var(--white); }
+    #services .section-label { }
+
+    .services-intro {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.4);
+      max-width: 480px;
+      line-height: 1.85;
+      margin-bottom: 4rem;
+    }
+
+    .services-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+
+    .services-col {
+      padding: 3rem;
+      background: var(--charcoal-2);
+    }
+
+    .col-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .col-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .jason-col .col-dot { background: var(--jason-light); }
+    .michelle-col .col-dot { background: var(--michelle-light); }
+
+    .col-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+    .col-role-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+    .jason-col .col-role-tag { color: #5A84B0; }
+    .michelle-col .col-role-tag { color: #9A6880; }
+
+    .service-list { display: flex; flex-direction: column; gap: 1px; }
+
+    .service-item {
+      padding: 1.5rem 1.2rem;
+      background: var(--charcoal-3);
+      transition: background 0.2s;
+      position: relative;
+    }
+    .service-item:hover { background: #303030; }
+
+    .service-item-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .service-item-title::before {
+      content: '';
+      display: block; width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--brass);
+      flex-shrink: 0;
+    }
+    .service-item-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.75;
+      padding-left: 1.1rem;
+    }
+
+    /* ── STATS ── */
+    #stats { background: var(--brass); padding: 70px 5%; }
+    .stats-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .stat-block { text-align: center; }
+    .stat-num {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(23,23,23,0.6);
+    }
+
+    /* ── WHY ── */
+    #why { background: var(--ivory); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 3.5rem;
+    }
+
+    .why-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      transition: transform 0.2s;
+    }
+    .why-card:hover { transform: translateY(-4px); }
+
+    .why-num {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 3.5rem;
+      font-weight: 400;
+      color: var(--ivory-2);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .why-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 0.7rem;
+    }
+
+    .why-desc {
+      font-size: 0.86rem;
+      color: var(--text-mid);
+      line-height: 1.85;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--charcoal); }
+    #contact .section-title { color: var(--white); }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 5rem;
+      margin-top: 3.5rem;
+      align-items: start;
+    }
+
+    .contact-left p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-persons { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .contact-person {
+      padding: 1.4rem 1.5rem;
+      background: var(--charcoal-2);
+      border-left: 2px solid;
+    }
+    .contact-person.jason-p { border-color: var(--jason-light); }
+    .contact-person.michelle-p { border-color: var(--michelle-light); }
+
+    .cp-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.95rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .cp-role {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .contact-person.jason-p .cp-role { color: #5A84B0; }
+    .contact-person.michelle-p .cp-role { color: #9A6880; }
+
+    .cp-detail {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+      display: flex; gap: 0.5rem;
+    }
+    .cp-detail a { color: rgba(255,255,255,0.6); text-decoration: none; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      background: var(--charcoal-3);
+      border: 1px solid var(--border-dark);
+      border-radius: 1px;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: rgba(201,164,85,0.5); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select option { background: var(--charcoal-3); }
+
+    .btn-send {
+      align-self: flex-start;
+      background: var(--brass);
+      color: var(--charcoal);
+      padding: 0.9rem 2.2rem;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-send:hover { background: var(--brass-light); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0F0F0F;
+      padding: 2rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      border-top: 1px solid rgba(201,164,85,0.1);
+    }
+    .footer-brand {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-brand span { color: var(--brass); }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease forwards; }
+    .delay-1 { animation-delay: 0.15s; opacity: 0; }
+    .delay-2 { animation-delay: 0.3s; opacity: 0; }
+    .delay-3 { animation-delay: 0.45s; opacity: 0; }
+    .delay-4 { animation-delay: 0.6s; opacity: 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .meet-grid, .services-duo, .contact-wrap { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .hero-duo { flex-direction: column; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-brand"><span>JMP</span> Accounting and Admin Solution</a>
+    <ul class="nav-links">
+      <li><a href="#meet">About Us</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Hire Us</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-text">JMP</div>
+    <div class="hero-inner">
+      <p class="hero-tag fade-up">Davao City, Philippines</p>
+      <h1 class="fade-up delay-1">
+        Two Experts.<br><em>One Team</em> Built<br>for Your Business.
+      </h1>
+      <p class="hero-sub fade-up delay-2">
+        Finance, HR, legal support, and executive admin — handled with precision and care by a professional duo you can trust.
+      </p>
+      <div class="hero-duo fade-up delay-3">
+        <div class="duo-card jason">
+          <p class="duo-role">Accounting & Bookkeeping</p>
+          <h3 class="duo-name">Jason Rey Pinaaling</h3>
+          <p class="duo-desc">Financial records, tax compliance, payroll, and bookkeeping solutions for growing businesses.</p>
+        </div>
+        <div class="duo-card michelle">
+          <p class="duo-role">HR · Executive · Legal Admin</p>
+          <h3 class="duo-name">Michelle Pinaaling</h3>
+          <p class="duo-desc">Talent acquisition, HR operations, executive support, and legal documentation services.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll fade-up delay-4">Scroll to explore</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MEET -->
+  <section id="meet">
+    <div class="section-inner">
+      <p class="section-label">The Team</p>
+      <h2 class="section-title">Two Specialists,<br>One Unified Vision</h2>
+      <div class="meet-grid">
+
+        <div class="meet-card jason-card">
+          <div class="meet-photo">JR <div class="photo-hint">+</div></div>
+          <h3 class="meet-name">Jason Rey Pinaaling</h3>
+          <p class="meet-role">Accounting & Bookkeeping Specialist</p>
+          <p class="meet-bio">
+            Jason brings meticulous attention to detail and a deep understanding of financial management to every engagement. He helps businesses maintain clean books, stay tax-compliant, and make informed financial decisions.<br><br>
+            [Add your background, credentials, and professional story here.]
+          </p>
+          <div class="meet-skills">
+            <span class="skill-tag">Bookkeeping</span>
+            <span class="skill-tag">Tax Filing</span>
+            <span class="skill-tag">Financial Reporting</span>
+            <span class="skill-tag">Payroll</span>
+            <span class="skill-tag">BIR Compliance</span>
+            <span class="skill-tag">QuickBooks</span>
+          </div>
+        </div>
+
+        <div class="meet-card michelle-card">
+          <div class="meet-photo">MP <div class="photo-hint">+</div></div>
+          <h3 class="meet-name">Michelle Pinaaling</h3>
+          <p class="meet-role">HR, Executive & Legal Assistant</p>
+          <p class="meet-bio">
+            Michelle combines people-first HR expertise with sharp organizational skills and legal support acumen. She ensures your team, leadership, and legal documents are in excellent hands at every stage.<br><br>
+            [Add your background, credentials, and professional story here.]
+          </p>
+          <div class="meet-skills">
+            <span class="skill-tag">Recruitment</span>
+            <span class="skill-tag">HR Operations</span>
+            <span class="skill-tag">Executive Support</span>
+            <span class="skill-tag">Legal Documentation</span>
+            <span class="skill-tag">DOLE Compliance</span>
+            <span class="skill-tag">Office Admin</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Comprehensive Services<br>Across Two Disciplines</h2>
+      <p class="services-intro">Whether you need financial clarity or people operations, we bring expertise, reliability, and a personal touch to every project.</p>
+      <div class="services-duo">
+
+        <div class="services-col jason-col">
+          <div class="col-header">
+            <div class="col-dot"></div>
+            <span class="col-name">Jason Rey Pinaaling</span>
+            <span class="col-role-tag">Finance</span>
+          </div>
+          <div class="service-list">
+            <div class="service-item">
+              <h4 class="service-item-title">Bookkeeping & Accounting</h4>
+              <p class="service-item-desc">Monthly bookkeeping, chart of accounts setup, bank reconciliation, and financial statement preparation.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">Tax Preparation & Filing</h4>
+              <p class="service-item-desc">BIR compliance, income tax returns, VAT filing, and withholding tax management.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">Payroll Processing</h4>
+              <p class="service-item-desc">Accurate payroll computation, SSS/PhilHealth/Pag-IBIG remittances, and payslip generation.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">Financial Reporting</h4>
+              <p class="service-item-desc">Income statements, balance sheets, cash flow reports, and custom financial dashboards.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">Business Registration Support</h4>
+              <p class="service-item-desc">DTI/SEC registration, BIR registration, and business permit assistance.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="services-col michelle-col">
+          <div class="col-header">
+            <div class="col-dot"></div>
+            <span class="col-name">Michelle Pinaaling</span>
+            <span class="col-role-tag">HR · Legal · Admin</span>
+          </div>
+          <div class="service-list">
+            <div class="service-item">
+              <h4 class="service-item-title">Recruitment & Onboarding</h4>
+              <p class="service-item-desc">End-to-end hiring, job posting, screening, interviews, offer management, and employee onboarding.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">HR Operations & Compliance</h4>
+              <p class="service-item-desc">Policy creation, employee handbooks, DOLE compliance, and HR audit support.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">Executive & Admin Support</h4>
+              <p class="service-item-desc">Calendar management, correspondence, travel coordination, and executive document preparation.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">Legal Documentation</h4>
+              <p class="service-item-desc">Contract drafting assistance, legal research support, document filing, and correspondence.</p>
+            </div>
+            <div class="service-item">
+              <h4 class="service-item-title">Benefits & Leave Management</h4>
+              <p class="service-item-desc">Benefits enrollment, leave tracking, 201 file management, and employee records maintenance.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-inner">
+      <div class="stat-block">
+        <div class="stat-num">5+</div>
+        <p class="stat-label">Years of Experience</p>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">50+</div>
+        <p class="stat-label">Clients Served</p>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">200+</div>
+        <p class="stat-label">Projects Completed</p>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">2</div>
+        <p class="stat-label">Dedicated Experts</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY ── -->
+  <section id="why">
+    <div class="section-inner">
+      <p class="section-label">Why Choose Us</p>
+      <h2 class="section-title">What Makes JMP Accounting and Admin Solution Different</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-num">01</div>
+          <h4 class="why-title">All-in-One Expertise</h4>
+          <p class="why-desc">Finance, HR, admin, and legal support under one roof. Stop juggling multiple freelancers — we cover it all as a team.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">02</div>
+          <h4 class="why-title">Reliable & Accountable</h4>
+          <p class="why-desc">We treat your business like our own. Deadlines are respected, work is accurate, and communication is always clear.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">03</div>
+          <h4 class="why-title">Philippines-Based, Remote-Ready</h4>
+          <p class="why-desc">Fluent in local compliance (BIR, DOLE, SSS) and experienced working with international clients remotely.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">04</div>
+          <h4 class="why-title">Tailored to Your Business</h4>
+          <p class="why-desc">No one-size-fits-all packages. We assess your needs and build a service plan that fits your size, budget, and goals.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">05</div>
+          <h4 class="why-title">Confidential & Trustworthy</h4>
+          <p class="why-desc">We handle sensitive financial and HR data with the utmost discretion and professionalism.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">06</div>
+          <h4 class="why-title">Ongoing Support</h4>
+          <p class="why-desc">We're not just project-based — we're available for retainer arrangements and long-term partnerships as your business grows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <p class="section-label">Get in Touch</p>
+      <h2 class="section-title">Let's Work Together</h2>
+      <div class="contact-wrap">
+        <div class="contact-left">
+          <p>Have a project in mind or need ongoing support? Reach out to either of us directly — or send a message and we'll get back to you within 24 hours.</p>
+          <div class="contact-persons">
+            <div class="contact-person jason-p">
+              <p class="cp-name">Jason Rey Pinaaling</p>
+              <p class="cp-role">Accounting & Bookkeeping</p>
+              <p class="cp-detail">✉ <a href="mailto:jason@pinaalingco.com">jason@pinaalingco.com</a></p>
+              <p class="cp-detail">📞 <a href="tel:+639000000000">+63 900 000 0000</a></p>
+            </div>
+            <div class="contact-person michelle-p">
+              <p class="cp-name">Michelle Pinaaling</p>
+              <p class="cp-role">HR · Executive · Legal Admin</p>
+              <p class="cp-detail">✉ <a href="mailto:michelle@pinaalingco.com">michelle@pinaalingco.com</a></p>
+              <p class="cp-detail">📞 <a href="tel:+639000000001">+63 900 000 0001</a></p>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Juan" />
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Dela Cruz" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="juan@company.com" />
+          </div>
+          <div class="form-group">
+            <label>Service Needed</label>
+            <select>
+              <option value="">Select a service...</option>
+              <optgroup label="Jason — Accounting & Finance">
+                <option>Bookkeeping & Accounting</option>
+                <option>Tax Preparation & Filing</option>
+                <option>Payroll Processing</option>
+                <option>Financial Reporting</option>
+                <option>Business Registration</option>
+              </optgroup>
+              <optgroup label="Michelle — HR, Legal & Admin">
+                <option>Recruitment & Onboarding</option>
+                <option>HR Operations & Compliance</option>
+                <option>Executive & Admin Support</option>
+                <option>Legal Documentation</option>
+                <option>Benefits & Leave Management</option>
+              </optgroup>
+              <option>Both / Multiple Services</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us about your business and what you need..."></textarea>
+          </div>
+          <button type="submit" class="btn-send">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-brand"><span>JMP</span> Accounting and Admin Solution</span>
+    <span class="footer-copy">© 2025 JMP Accounting and Admin Solution · Davao City, Philippines · All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+    (function animRing() {
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a, button, .service-item, .meet-card, .why-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { ring.style.width = '54px'; ring.style.height = '54px'; ring.style.opacity = '0.5'; });
+      el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.opacity = '1'; });
+    });
+
+    // Form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-send');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#3DAA7A';
+      btn.style.color = '#fff';
+      setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; btn.style.color = ''; e.target.reset(); }, 3200);
+    }
+
+    // Scroll-triggered fade-in for sections
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'translateY(0)'; } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.meet-card, .service-item, .why-card, .stat-block, .contact-person').forEach(el => {
+      el.style.opacity = 0; el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
+</body>
+</html>
